@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using EFCoreMigrationsAndSQLScript.Data;
+using EFCoreMigrationsAndSQLScript.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreMigrationsAndSQLScript
@@ -17,6 +18,7 @@ namespace EFCoreMigrationsAndSQLScript
             Console.WriteLine("- - - - - - - - - - - - -");
             Console.WriteLine("[1] HealthCheck");
             Console.WriteLine("[2] Create Database");
+            Console.WriteLine("[3] Add Random Records");
             Console.WriteLine("[4] Script Database");
             Console.WriteLine("[5] Migrations List");
             Console.WriteLine("[6] Pending Migrations");
@@ -42,6 +44,10 @@ namespace EFCoreMigrationsAndSQLScript
                 
                 case '2':
                     CreateDatabase(_context);
+                    break;
+
+                case '3':
+                    AddRandomRecords(_context);
                     break;
 
                 case '4':
@@ -119,6 +125,21 @@ namespace EFCoreMigrationsAndSQLScript
 
         }
 
+        static void AddRandomRecords(ApplicationContext _context)
+        {
+
+            var random = new Random().Next().ToString(); 
+
+            var customer = new Customer
+            {
+                Name = $"Customer #{random}",
+                Email = $"customer{random}@companyname.com",
+            };
+
+            _context.Set<Customer>().Add(customer);            
+            _context.SaveChanges();    
+    
+        }
 
         static void MigrationsList(ApplicationContext _context)
         {
