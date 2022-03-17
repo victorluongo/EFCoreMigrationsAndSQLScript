@@ -17,6 +17,7 @@ namespace EFCoreMigrationsAndSQLScript
             Console.WriteLine("- - - - - - - - - - - - -");
             Console.WriteLine("[1] HealthCheck");
             Console.WriteLine("[2] Create Database");
+            Console.WriteLine("[4] Script Database");
             Console.WriteLine("[5] Migrations List");
             Console.WriteLine("[6] Pending Migrations");
             Console.WriteLine("[7] Execute Migrations");
@@ -41,6 +42,10 @@ namespace EFCoreMigrationsAndSQLScript
                 
                 case '2':
                     CreateDatabase(_context);
+                    break;
+
+                case '4':
+                    ScriptDatabase(_context);
                     break;
 
                 case '5':
@@ -104,6 +109,16 @@ namespace EFCoreMigrationsAndSQLScript
 
             }
         }
+
+        static void ScriptDatabase(ApplicationContext _context)
+        {
+            var scriptDatabase = _context.Database.GenerateCreateScript();
+            
+            ConsoleTextBox("Database Sript: \n");
+            Console.WriteLine(scriptDatabase);
+
+        }
+
 
         static void MigrationsList(ApplicationContext _context)
         {
